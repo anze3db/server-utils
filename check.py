@@ -15,7 +15,9 @@ def checkWebsites():
         try:
             r = requests.get(s)
             if r.status_code != 200:
-                print_red("  %s returned %s" % (s, r.status_code))
+                print "  [%s] %s" % (red(r.status_code), s)
+            else:
+                print "  [%s] %s" % (green(r.status_code), s)
         except requests.exceptions.ConnectionError:
                 print s, "connection error"
 
@@ -35,11 +37,14 @@ def checkServices():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = s.connect_ex((address, port))
         if(result != 0):
-            print red("  %s" % name) + " seems to be down"    
+            print "  [%s] %s (%s)" % (red("down"), name, port)
+        else:
+            print "  [%s] %s (%s)" % (green("up"), name, port)
     
 def red(s):
     return '\033[91m%s\033[0m' % s    
-
+def green(s):
+    return '\033[92m%s\033[0m' % s
 if __name__ == "__main__":
     checkWebsites()
     checkServices()
