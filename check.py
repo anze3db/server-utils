@@ -35,10 +35,10 @@ def checkServices():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = s.connect_ex((address, port))
         if(result != 0):
-            print_red("  %s seems to be down" % name)    
+            print red("  %s" % name) + " seems to be down"    
     
-def print_red(s):
-    print '\033[91m%s\033[0m' % s    
+def red(s):
+    return '\033[91m%s\033[0m' % s    
 
 if __name__ == "__main__":
     checkWebsites()
