@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import requests
-
+import smtplib
 import socket
 
 def checkWebsites():
@@ -40,7 +40,16 @@ def checkServices():
             print "  [%s] %s (%s)" % (red("down"), name, port)
         else:
             print "  [%s] %s (%s)" % (green("up"), name, port)
-    
+
+def checkSendMail():
+    print "Sending test email"
+    try:
+       smtpObj = smtplib.SMTP('mail.psywerx.net')
+       smtpObj.sendmail("smotko@psywerx.net", "test@smotko.si", "Test")         
+       print "  [%s] mail sent " % green("ok")
+    except smtplib.SMTPException:
+       print "  [%s] mail not sent" % red("fail")
+
 def red(s):
     return '\033[91m%s\033[0m' % s    
 def green(s):
@@ -48,3 +57,4 @@ def green(s):
 if __name__ == "__main__":
     checkWebsites()
     checkServices()
+    checkSendMail()
